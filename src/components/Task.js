@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa'
 import { FaCheckCircle } from 'react-icons/fa'
-import { ImWarning } from 'react-icons/im';
+import { ImSpinner, ImWarning } from 'react-icons/im';
 import { BsPencilSquare } from 'react-icons/bs'
 import { CustomDialog as ModalContainer } from 'react-st-modal';
 
@@ -10,21 +10,27 @@ import { Modal } from './Modal';
 
 const Task = ({ task, onTaskUpdate, onDeleteTask }) => {
     const [error, setError] = useState(null);
+    const [isTaskLoading, setTaskLoading] = useState(false);
 
     const handleTaskUpdate = async ({ ...updatedFields }) => {
         setError(null);
+        setTaskLoading(true);
         const { error, updatedTask } = await callApi.updateTask({ id: task.id, ...updatedFields });
         if (error) {
             setError(error.message);
+            setTaskLoading(false);
             return;
         }
         onTaskUpdate(updatedTask);
+        setTaskLoading(false);
     };
 
     const handleDeleteTask = async () => {
+        setTaskLoading(true);
         const { error, response } = await callApi.deleteTask(task.id);
         if (error) {
             setError(error.message);
+            setTaskLoading(false);
             return;
         }
         if (response.status === 200){
@@ -50,30 +56,37 @@ const Task = ({ task, onTaskUpdate, onDeleteTask }) => {
 
     return(
         <div className='task'>
-            <h3 className='overflow-block'>{ task.title }</h3>
-            <div className='overflow-block'>{ task.description }</div>
-            <FaTimes
-                className='close-icon'
-                title='Delete'
-                onClick={ handleDeleteTask }
-            />
             {
-                error &&
-                <ImWarning
-                    className='warning-icon'
-                    title='Task not updated'
-                />
+                isTaskLoading ?
+                    <ImSpinner className='spinner'/> :
+                    <>
+                        <h3 className='overflow-block'>{ task.title }</h3>
+                        <div className='overflow-block'>{ task.description }</div>
+                        <FaTimes
+                            className='close-icon'
+                            title='Delete'
+                            onClick={ handleDeleteTask }
+                            disabled={true}
+                        />
+                        {
+                            error &&
+                            <ImWarning
+                                className='warning-icon'
+                                title='Task not updated'
+                            />
+                        }
+                        <FaCheckCircle
+                            className={ `done-icon ${ task.status ? 'task-done' : 'task-not-done' }` }
+                            title='Make done'
+                            onClick={ () => handleTaskUpdate({ status: !task.status }) }
+                        />
+                        <BsPencilSquare
+                            className='pencil-icon'
+                            title='Modify task'
+                            onClick={ handleOpenModal }
+                        />
+                    </>
             }
-            <FaCheckCircle
-                className={ `done-icon ${ task.status ? 'task-done' : 'task-not-done' }` }
-                title='Make done'
-                onClick={ () => handleTaskUpdate({ status: !task.status }) }
-            />
-            <BsPencilSquare
-                className='pencil-icon'
-                title='Modify task'
-                onClick={ handleOpenModal }
-            />
         </div>
     )
 };

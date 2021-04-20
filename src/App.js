@@ -62,7 +62,7 @@ function App() {
 
             {
                 isTasksLoading ?
-                    <ImSpinner className='spinner' /> :
+                    <ImSpinner className='spinner'/> :
                     error ?
                         <h4 className='error'>{ error }</h4> :
                         <Tasks tasks={ tasks }

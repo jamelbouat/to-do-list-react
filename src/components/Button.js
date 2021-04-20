@@ -18,7 +18,6 @@ const Button = ({ handleFormShow }) => {
         }
         </button>
     );
-
 };
 
 export default Button;

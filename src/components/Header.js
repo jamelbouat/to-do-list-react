@@ -6,7 +6,6 @@ const Header = ({ handleFormShow}) => (
         <h1>Tasks list</h1>
         <Button handleFormShow={ handleFormShow }/>
     </div>
-
 );
 
 export default Header;
