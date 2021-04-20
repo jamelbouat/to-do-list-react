@@ -1,11 +1,18 @@
-const url = 'http://localhost:4400';
+// const url = 'http://localhost:4400';
+
+const url = 'https://mockend.com/https://github.com/jamelbouat/to-do-list-react/.mockend.json';
 
 export const getTasks = async () => {
     let error = null;
     let fetchedTasks = null;
 
     try {
-        const response = await fetch(`${ url }/tasks`);
+        const response = await fetch(`${ url }/tasks`, {
+            headers: {
+                'Access-Control-Allow-Origin' : '*',
+                'Content-type': 'application/json'
+            }
+        });
         fetchedTasks = await response.json();
     } catch (e) {
         error = e;
