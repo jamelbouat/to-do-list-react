@@ -1,7 +1,7 @@
-// const url = 'http://localhost:4400';
+const url = 'http://localhost:4400';
 
-const key = process.env.REACT_APP_API_KEY;
-const url = `https://${ key }.mockapi.io`;
+// const key = process.env.REACT_APP_API_KEY;
+// const url = `https://${ key }.mockapi.io`;
 
 export const getTasks = async () => {
     let error = null;
