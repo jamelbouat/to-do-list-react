@@ -11,8 +11,9 @@ RUN npm install
 RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 
 COPY . .
-RUN npm run server
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+COPY command.sh /scripts/command.sh
+RUN ["chmod", "+x", "/scripts/command.sh"]
+ENTRYPOINT ["/scripts/command.sh"]
