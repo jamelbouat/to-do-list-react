@@ -16,4 +16,4 @@ EXPOSE 3000
 
 COPY command.sh /scripts/command.sh
 RUN ["chmod", "+x", "/scripts/command.sh"]
-ENTRYPOINT ["/scripts/command.sh"]
+ENTRYPOINT ["sh", "/scripts/command.sh"]
