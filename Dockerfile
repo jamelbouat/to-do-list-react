@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:16-slim
 
 LABEL description="frontend"
 
@@ -8,14 +8,15 @@ COPY ./package.json .
 COPY ./package-lock.json .
 RUN npm install
 
-RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
+#RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 
 COPY . .
 
-EXPOSE 4400
 EXPOSE 3000
 
-COPY command.sh /scripts/command.sh
-RUN ["chmod", "+x", "/scripts/command.sh"]
+# COPY command.sh /scripts/command.sh
+# RUN ["chmod", "+x", "/scripts/command.sh"]
 
-ENTRYPOINT ["sh", "/scripts/command.sh"]
+# ENTRYPOINT ["sh", "/scripts/command.sh"]
+
+ENTRYPOINT ["sh", "./command.sh" ]
