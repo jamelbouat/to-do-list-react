@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 npm run server &
 P1=$!
 npm start &
