@@ -19,4 +19,4 @@ EXPOSE 3000
 
 # ENTRYPOINT ["sh", "/scripts/command.sh"]
 
-ENTRYPOINT ["sh", "./command.sh" ]
+CMD ["sh", "./command.sh" ]
